@@ -88,7 +88,14 @@ async function login(user) {
     const collection = await dbService.getCollection('user')
     try {
         const foundUser = await collection.findOne(user);
-            return foundUser
+        if(foundUser) {
+            user.firstName = foundUser.firstName;
+            user.isAdmin = foundUser.isAdmin;
+            delete user.password;
+            delete user.email;
+            return user;
+        } 
+        else return foundUser;
         } catch (err) {
             throw err;
         }

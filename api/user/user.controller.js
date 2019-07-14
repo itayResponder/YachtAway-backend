@@ -4,13 +4,14 @@ module.exports = {
     getUser,
     getUsers,
     deleteUser,
-    login
+    login,
+    logout
 }
 
 async function login(req, res) {
     try {
         const user = await userService.login(req.body)
-        if(user) {
+        if (user) {
             req.session.user = user;
             res.json(user);
         } else {
@@ -22,12 +23,21 @@ async function login(req, res) {
     }
 }
 
+async function logout(req, res) {
+    try {
+        req.session.destroy()
+        res.send({ message: 'logged out successfully' })
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
 async function getUser(req, res) {
     const user = await userService.getById(req.params.id)
     res.send(user)
 }
-  
-async function getUsers (req, res) {
+
+async function getUsers(req, res) {
     const users = await userService.query()
     res.send(users)
 }
