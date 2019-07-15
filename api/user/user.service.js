@@ -89,6 +89,7 @@ async function login(user) {
     try {
         const foundUser = await collection.findOne(user);
         if(foundUser) {
+            user._id = foundUser._id;
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
             delete user.password;

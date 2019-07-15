@@ -7,7 +7,19 @@ module.exports = {
     getById,
     remove,
     update,
-    add
+    add,
+    queryByOwner
+}
+
+async function queryByOwner(ownerId) {
+    const collection = await dbService.getCollection('yacht')
+    try {
+        const yachts = await collection.find({"owner.userId":ownerId}).toArray();
+        return yachts;
+    } catch (err) {
+        logger.error('ERROR: cannot find yachts')
+        throw err;
+    }
 }
 
 async function query(filterBy = {}) {
@@ -18,7 +30,6 @@ async function query(filterBy = {}) {
     if (filterBy.minBalance) {
         criteria.balance = { $gte: filterBy.minBalance }
     }
-
     const collection = await dbService.getCollection('yacht')
     try {
         const yachts = await collection.find(criteria).toArray();
