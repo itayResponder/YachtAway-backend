@@ -91,7 +91,6 @@ async function login(user) {
         if(foundUser) {
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
-            user.isSeller = foundUser.isSeller;
             delete user.password;
             delete user.email;
             return user;
