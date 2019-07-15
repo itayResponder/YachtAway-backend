@@ -17,7 +17,7 @@ async function getYacht(req, res) {
     }
 }
 
-const getYachts = async (req, res) => {
+async function getYachts(req, res) {
     try {
         const yachts = await yachtService.query()
         res.send(yachts)
