@@ -16,7 +16,7 @@ async function query(filterBy = {}) {
         criteria.name = filterBy.txt
     }
     if (filterBy.minBalance) {
-        criteria.balance = {$gte : filterBy.minBalance}
+        criteria.balance = { $gte: filterBy.minBalance }
     }
 
     const collection = await dbService.getCollection('yacht')
@@ -32,7 +32,7 @@ async function query(filterBy = {}) {
 async function getById(yachtId) {
     const collection = await dbService.getCollection('yacht')
     try {
-        const yacht = await collection.findOne({"_id":ObjectId(yachtId)})
+        const yacht = await collection.findOne({ "_id": ObjectId(yachtId) })
         return yacht
     } catch (err) {
         logger.error(`ERROR: while finding yacht ${yachtId}`)
@@ -43,7 +43,7 @@ async function getById(yachtId) {
 async function remove(yachtId) {
     const collection = await dbService.getCollection('yacht')
     try {
-        await collection.deleteOne({"_id":ObjectId(yachtId)})
+        await collection.deleteOne({ "_id": ObjectId(yachtId) })
     } catch (err) {
         logger.error(`ERROR: cannot remove yacht ${yachtId}`)
         throw err;
