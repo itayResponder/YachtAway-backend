@@ -13,13 +13,12 @@ async function login(req, res) {
         const user = await userService.login(req.body)
         if (user) {
             req.session.user = user;
-            res.json(user);
+            res.send(user);
         } else {
             res.status(401).send('User does not exist')
         }
     } catch (err) {
-        console.log('error in users db')
-        throw err;
+        res.status(500).send({ error: err })
     }
 }
 
@@ -33,8 +32,12 @@ async function logout(req, res) {
 }
 
 async function getUser(req, res) {
-    const user = await userService.getById(req.params.id)
-    res.send(user)
+    try {
+        const user = await userService.getById(req.params.id)
+        res.send(user)
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
 }
 
 async function getUsers(req, res) {
@@ -43,6 +46,10 @@ async function getUsers(req, res) {
 }
 
 async function deleteUser(req, res) {
-    await userService.remove(req.params.id)
-    res.send({})
+    try {
+        await userService.remove(req.params.id)
+        res.send({ msg: 'user deleted' })
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
 }

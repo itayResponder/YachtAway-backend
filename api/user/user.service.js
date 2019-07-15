@@ -26,7 +26,7 @@ async function query(filterBy = {}) {
         const users = await collection.find(criteria).toArray();
         return users
     } catch (err) {
-        console.log('ERROR: cannot find users')
+        logger.error('Cannot find users')
         throw err;
     }
 }
@@ -37,7 +37,7 @@ async function getById(userId) {
         const user = await collection.findOne({"_id":ObjectId(userId)})
         return user
     } catch (err) {
-        console.log(`ERROR: while finding user ${userId}`)
+        logger.error(`While finding user ${userId}`)
         throw err;
     }
 }
@@ -47,7 +47,7 @@ async function getByEmail(email) {
         const user = await collection.findOne({email})
         return user
     } catch (err) {
-        console.log(`ERROR: while finding user ${email}`)
+        logger.error(`While finding user ${email}`)
         throw err;
     }
 }
@@ -57,7 +57,7 @@ async function remove(userId) {
     try {
         await collection.remove({"_id":ObjectId(userId)})
     } catch (err) {
-        console.log(`ERROR: cannot remove user ${userId}`)
+        logger.error(`Cannot remove user ${userId}`)
         throw err;
     }
 }
@@ -68,7 +68,7 @@ async function update(user) {
         await collection.replaceOne({"_id":ObjectId(user._id)}, {$set : user})
         return user
     } catch (err) {
-        console.log(`ERROR: cannot update user ${user._id}`)
+        logger.error(`Cannot update user ${user._id}`)
         throw err;
     }
 }
@@ -79,7 +79,7 @@ async function add(user) {
         await collection.insertOne(user);
         return user;
     } catch (err) {
-        console.log(`ERROR: cannot insert user`)
+        logger.error(`Cannot insert user`)
         throw err;
     }
 }
@@ -91,12 +91,14 @@ async function login(user) {
         if(foundUser) {
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
+            user.isSeller = foundUser.isSeller;
             delete user.password;
             delete user.email;
             return user;
         } 
         else return foundUser;
         } catch (err) {
+            logger.error('Cannot login')
             throw err;
         }
     }

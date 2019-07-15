@@ -24,7 +24,7 @@ async function query(filterBy = {}) {
         const yachts = await collection.find(criteria).toArray();
         return yachts
     } catch (err) {
-        console.log('ERROR: cannot find yachts')
+        logger.error('ERROR: cannot find yachts')
         throw err;
     }
 }
@@ -35,7 +35,7 @@ async function getById(yachtId) {
         const yacht = await collection.findOne({"_id":ObjectId(yachtId)})
         return yacht
     } catch (err) {
-        console.log(`ERROR: while finding yacht ${yachtId}`)
+        logger.error(`ERROR: while finding yacht ${yachtId}`)
         throw err;
     }
 }
@@ -45,7 +45,7 @@ async function remove(yachtId) {
     try {
         await collection.deleteOne({"_id":ObjectId(yachtId)})
     } catch (err) {
-        console.log(`ERROR: cannot remove yacht ${yachtId}`)
+        logger.error(`ERROR: cannot remove yacht ${yachtId}`)
         throw err;
     }
 }
@@ -59,7 +59,7 @@ async function update(yacht) {
         await collection.updateOne({ _id }, { $set: yacht })
         return yacht
     } catch (err) {
-        console.log(`ERROR: cannot update yacht ${yacht._id}`)
+        logger.error(`ERROR: cannot update yacht ${yacht._id}`)
         throw err;
     }
 }
@@ -70,9 +70,7 @@ async function add(yacht) {
         await collection.insertOne(yacht);
         return yacht;
     } catch (err) {
-        console.log(`ERROR: cannot insert yacht`)
+        logger.error(`ERROR: cannot insert yacht`)
         throw err;
     }
 }
-
-
