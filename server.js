@@ -13,7 +13,7 @@ const userRoutes = require('./api/user/user.routes')
 const yachtRoutes = require('./api/yacht/yacht.routes')
 
 const logger = require('./services/logger.service')
-// const socketService = require('./services/socket.service')
+    // const socketService = require('./services/socket.service')
 
 
 app.use(cookieParser())
@@ -23,7 +23,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-  }))
+}))
 
 
 if (process.env.NODE_ENV !== 'production') {
