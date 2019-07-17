@@ -7,11 +7,9 @@ module.exports = {
 }
 
 async function query(filterBy = {}) {
-    // TODO: ADD A CERTIA TO LOAD ANY RESERVATION :
     const criteria = {};
     if (filterBy.userId) {
-        criteria['user._id'] = filterBy.userId
-            //   console.log('')
+        criteria['user._id'] = ObjectId(filterBy.userId)
     }
     const collection = await dbService.getCollection('reservation')
     try {

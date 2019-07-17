@@ -13,7 +13,7 @@ async function query(owner = {}) {
     const criteria = {};
     // get yachts by user logged in
     if(owner._id) {
-        criteria['owner._id'] = owner._id
+        criteria['owner._id'] = ObjectId(owner._id)
     }
     const collection = await dbService.getCollection('yacht')
     try {
