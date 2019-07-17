@@ -6,17 +6,7 @@ module.exports = {
     deleteYacht,
     updateYacht,
     add,
-    // getYachtsByOwner
 }
-
-// async function getYachtsByOwner(req, res) {
-//     try {
-//         const yachtsByOwner = await yachtService.queryByOwner(req.params.id)
-//         res.send(yachtsByOwner)
-//     } catch (err) {
-//         res.status(500).send({ error: err })
-//     }
-// }
 
 async function getYacht(req, res) {
     try {

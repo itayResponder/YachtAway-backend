@@ -4,18 +4,14 @@ const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-
 const app = express()
 const http = require('http').createServer(app);
-
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const yachtRoutes = require('./api/yacht/yacht.routes')
 const reservationRoutes = require('./api/reservation/reservation.routes')
-
 const logger = require('./services/logger.service')
     // const socketService = require('./services/socket.service')
-
 
 app.use(cookieParser())
 app.use(bodyParser.json());
@@ -25,7 +21,6 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }))
-
 
 if (process.env.NODE_ENV !== 'production') {
     const corsOptions = {
@@ -40,13 +35,11 @@ app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/yacht', yachtRoutes)
 app.use('/reservation', reservationRoutes)
-
 // socketService.setup(http);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')));
 }
-
 
 const port = process.env.PORT || 3000;
 http.listen(port, () => {

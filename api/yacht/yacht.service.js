@@ -7,27 +7,13 @@ module.exports = {
     remove,
     update,
     add,
-    // queryByOwner
 }
 
-// async function queryByOwner(ownerId) {
-//     const collection = await dbService.getCollection('yacht')
-//     try {
-//         const yachts = await collection.find({ "owner.userId": ownerId }).toArray();
-//         console.log('server yacht.service yachtOwner:', yachts)
-//         return yachts;
-//     } catch (err) {
-//         logger.error('ERROR: cannot find yachts')
-//         throw err;
-//     }
-// }
-
-async function query(filterBy = {}) {
+async function query(owner = {}) {
     const criteria = {};
     // get yachts by user logged in
-    if(filterBy.userId) {
-        criteria['owner.userId'] = filterBy.userId
-        console.log(criteria)
+    if(owner._id) {
+        criteria['owner._id'] = owner._id
     }
     const collection = await dbService.getCollection('yacht')
     try {
