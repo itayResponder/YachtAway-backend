@@ -8,7 +8,7 @@ const router = express.Router()
 
 // router.get('/', requireAuth, getYachts)
 router.get('/', getYachts)
-router.get('/owner:id', getYachtsByOwner)
+router.get('/owner/:id', getYachtsByOwner)
 router.get('/:id', getYacht)
 // router.delete('/:id',  requireAuth, deleteYacht)
 router.delete('/:id', deleteYacht)
