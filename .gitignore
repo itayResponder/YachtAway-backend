@@ -2,3 +2,5 @@ node_modules
 logs
 server.js
 *.log
+logs/log.log
+server.js
