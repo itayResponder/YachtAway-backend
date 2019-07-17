@@ -12,11 +12,16 @@ module.exports = {
 }
 
 async function queryByOwner(ownerId) {
+    console.log('server yachtservec ownerId:', ownerId) 
     const collection = await dbService.getCollection('yacht')
+    // console.log('the collection in the yachtService(backend) is: ',collection)
     try {
         const yachts = await collection.find({"owner.userId":ownerId}).toArray();
+        console.log('yachtService after mongo yachts:', yachts)
         return yachts;
     } catch (err) {
+        console.log('error happend in query: ',err);
+        
         logger.error('ERROR: cannot find yachts')
         throw err;
     }

@@ -12,6 +12,7 @@ module.exports = {
 async function getYachtsByOwner(req, res) {
     try {
         const yachtsByOwner = await yachtService.queryByOwner(req.params.id)
+        // console.log('yachtByOwner in yachtController in the backend =  ',yachtsByOwner)
         res.send(yachtsByOwner)
     } catch (err) {
         res.status(500).send({ error: err })
