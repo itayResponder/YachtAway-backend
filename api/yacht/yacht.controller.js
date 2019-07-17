@@ -29,7 +29,7 @@ async function getYacht(req, res) {
 
 async function getYachts(req, res) {
     try {
-        const yachts = await yachtService.query()
+        const yachts = await yachtService.query(req.query)
         res.send(yachts)
     } catch (err) {
         res.status(500).send({ error: err })
