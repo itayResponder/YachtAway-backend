@@ -24,11 +24,15 @@ async function queryByOwner(ownerId) {
 
 async function query(filterBy = {}) {
     const criteria = {};
+    const owner = {}
     if (filterBy.txt) {
         criteria.name = filterBy.txt
     }
     if (filterBy.minBalance) {
         criteria.balance = { $gte: filterBy.minBalance }
+    }
+    if(filterBy.userId) {
+        owner.userId = filterBy.userId
     }
     const collection = await dbService.getCollection('yacht')
     try {
