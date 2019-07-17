@@ -27,6 +27,7 @@ async function query(filterBy = {}) {
     // get yachts by user logged in
     if(filterBy.userId) {
         criteria['owner.userId'] = filterBy.userId
+        console.log(criteria)
     }
     const collection = await dbService.getCollection('yacht')
     try {
