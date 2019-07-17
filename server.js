@@ -11,6 +11,7 @@ const http = require('http').createServer(app);
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const yachtRoutes = require('./api/yacht/yacht.routes')
+const reservationRoutes = require('./api/reservation/reservation.routes')
 
 const logger = require('./services/logger.service')
     // const socketService = require('./services/socket.service')
@@ -28,7 +29,7 @@ app.use(session({
 
 if (process.env.NODE_ENV !== 'production') {
     const corsOptions = {
-        origin: ['http://localhost:8080','http://localhost:8081','http://localhost:8082'],
+        origin: ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082'],
         credentials: true
     };
     app.use(cors(corsOptions));
@@ -38,6 +39,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/yacht', yachtRoutes)
+app.use('/reservation', reservationRoutes)
 
 // socketService.setup(http);
 
