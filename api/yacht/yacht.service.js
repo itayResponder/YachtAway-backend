@@ -1,4 +1,3 @@
-
 const dbService = require('../../services/db.service')
 const ObjectId = require('mongodb').ObjectId
 
@@ -8,36 +7,13 @@ module.exports = {
     remove,
     update,
     add,
-    queryByOwner
 }
 
-async function queryByOwner(ownerId) {
-    console.log('server yachtservec ownerId:', ownerId) 
-    const collection = await dbService.getCollection('yacht')
-    // console.log('the collection in the yachtService(backend) is: ',collection)
-    try {
-        const yachts = await collection.find({"owner.userId":ownerId}).toArray();
-        console.log('yachtService after mongo yachts:', yachts)
-        return yachts;
-    } catch (err) {
-        console.log('error happend in query: ',err);
-        
-        logger.error('ERROR: cannot find yachts')
-        throw err;
-    }
-}
-
-async function query(filterBy = {}) {
+async function query(owner = {}) {
     const criteria = {};
-    const owner = {}
-    if (filterBy.txt) {
-        criteria.name = filterBy.txt
-    }
-    if (filterBy.minBalance) {
-        criteria.balance = { $gte: filterBy.minBalance }
-    }
-    if(filterBy.userId) {
-        owner.userId = filterBy.userId
+    // get yachts by user logged in
+    if(owner._id) {
+        criteria['owner._id'] = ObjectId(owner._id)
     }
     const collection = await dbService.getCollection('yacht')
     try {

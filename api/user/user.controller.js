@@ -5,7 +5,8 @@ module.exports = {
     getUsers,
     deleteUser,
     login,
-    logout
+    logout,
+    setFavorite
 }
 
 async function login(req, res) {
@@ -21,7 +22,19 @@ async function login(req, res) {
         res.status(500).send({ error: err })
     }
 }
-
+async function setFavorite(req, res) {
+    try {
+        const user = await userService.getById(req.body.userId)
+        delete req.body.userId
+        user.likedYachts.push(req.body)
+        const updatedUser = await userService.update(user)
+        res.send(updatedUser)
+    }
+    catch (err) {
+        console.log('error')
+        res.status(500).send({ error: err })
+    }
+}
 async function logout(req, res) {
     try {
         req.session.destroy()

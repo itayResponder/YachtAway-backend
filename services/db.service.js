@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-const config = require('../config')
-
+// const config = require('../config')
+const uri = `mongodb+srv://itay:12345@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority`
 module.exports = {
     connect,
     getCollection
@@ -13,7 +13,8 @@ var dbConn = null;
 async function connect() {
     if (dbConn) return dbConn;
     try {
-        const client = await MongoClient.connect(config.dbURL, { useNewUrlParser: true });
+        // const client = await MongoClient.connect(config.dbURL, { useNewUrlParser: true });
+        const client = await MongoClient.connect(uri, { useNewUrlParser: true });
         const db = client.db(dbName);
         dbConn = db;
         return db;

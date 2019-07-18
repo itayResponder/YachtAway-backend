@@ -18,7 +18,7 @@ async function query(filterBy = {}) {
         criteria.name = filterBy.txt
     }
     if (filterBy.minBalance) {
-        criteria.balance = {$gte : filterBy.minBalance}
+        criteria.balance = { $gte: filterBy.minBalance }
     }
 
     const collection = await dbService.getCollection('user')
@@ -34,7 +34,7 @@ async function query(filterBy = {}) {
 async function getById(userId) {
     const collection = await dbService.getCollection('user')
     try {
-        const user = await collection.findOne({"_id":ObjectId(userId)})
+        const user = await collection.findOne({ "_id": ObjectId(userId) })
         return user
     } catch (err) {
         logger.error(`While finding user ${userId}`)
@@ -44,7 +44,7 @@ async function getById(userId) {
 async function getByEmail(email) {
     const collection = await dbService.getCollection('user')
     try {
-        const user = await collection.findOne({email})
+        const user = await collection.findOne({ email })
         return user
     } catch (err) {
         logger.error(`While finding user ${email}`)
@@ -55,7 +55,7 @@ async function getByEmail(email) {
 async function remove(userId) {
     const collection = await dbService.getCollection('user')
     try {
-        await collection.remove({"_id":ObjectId(userId)})
+        await collection.remove({ "_id": ObjectId(userId) })
     } catch (err) {
         logger.error(`Cannot remove user ${userId}`)
         throw err;
@@ -65,7 +65,8 @@ async function remove(userId) {
 async function update(user) {
     const collection = await dbService.getCollection('user')
     try {
-        await collection.replaceOne({"_id":ObjectId(user._id)}, {$set : user})
+        await collection.replaceOne({ "_id": ObjectId(user._id) }, { $set: user })
+        console.log('last stop ', user)
         return user
     } catch (err) {
         logger.error(`Cannot update user ${user._id}`)
@@ -88,17 +89,17 @@ async function login(user) {
     const collection = await dbService.getCollection('user')
     try {
         const foundUser = await collection.findOne(user);
-        if(foundUser) {
+        if (foundUser) {
             user._id = foundUser._id;
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
             delete user.password;
             delete user.email;
             return user;
-        } 
-        else return foundUser;
-        } catch (err) {
-            logger.error('Cannot login')
-            throw err;
         }
+        else return foundUser;
+    } catch (err) {
+        logger.error('Cannot login')
+        throw err;
     }
+}
