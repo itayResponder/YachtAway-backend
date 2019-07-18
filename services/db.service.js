@@ -1,8 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-<<<<<<< HEAD
-// const config = require('../config')
-=======
->>>>>>> 0bd59dfc975b22caf1cb8d08f31d6f83a653696e
+
 const uri = `mongodb+srv://itay:12345@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority`
 module.exports = {
     connect,
