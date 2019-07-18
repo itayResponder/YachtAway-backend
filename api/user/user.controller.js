@@ -31,7 +31,6 @@ async function setFavorite(req, res) {
         res.send(updatedUser)
     }
     catch (err) {
-        console.log('error')
         res.status(500).send({ error: err })
     }
 }

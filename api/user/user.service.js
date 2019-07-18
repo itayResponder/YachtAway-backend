@@ -1,4 +1,3 @@
-
 const dbService = require('../../services/db.service')
 const ObjectId = require('mongodb').ObjectId
 
@@ -20,7 +19,6 @@ async function query(filterBy = {}) {
     if (filterBy.minBalance) {
         criteria.balance = { $gte: filterBy.minBalance }
     }
-
     const collection = await dbService.getCollection('user')
     try {
         const users = await collection.find(criteria).toArray();
@@ -66,10 +64,9 @@ async function update(user) {
     const collection = await dbService.getCollection('user')
     try {
         await collection.replaceOne({ "_id": ObjectId(user._id) }, { $set: user })
-        console.log('last stop ', user)
         return user
     } catch (err) {
-        logger.error(`Cannot update user ${user._id}`)
+        logger.error(`backend user.service Cannot update user ${user} error: `, err)
         throw err;
     }
 }
@@ -80,7 +77,7 @@ async function add(user) {
         await collection.insertOne(user);
         return user;
     } catch (err) {
-        logger.error(`Cannot insert user`)
+        logger.error(`backend user.service Cannot add user ${user} error:`, err)
         throw err;
     }
 }
@@ -99,7 +96,7 @@ async function login(user) {
         }
         else return foundUser;
     } catch (err) {
-        logger.error('Cannot login')
+        logger.error(`backend user.service Cannot login user ${user} error:`, err)
         throw err;
     }
 }
