@@ -9,11 +9,11 @@ module.exports = {
     add,
 }
 
-async function query(owner = {}) {
+async function query(user = {}) {
     const criteria = {};
     // get yachts by user logged in
-    if(owner._id) {
-        criteria['owner._id'] = ObjectId(owner._id)
+    if(user._id) {
+        criteria['user._id'] = ObjectId(user._id)
     }
     const collection = await dbService.getCollection('yacht')
     try {
