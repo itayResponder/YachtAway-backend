@@ -24,7 +24,7 @@ async function query(filterBy = {}) {
 async function add(reservation) {
     const collection = await dbService.getCollection('reservation')
     try {
-        await collection.insertOne(reservation)
+        await collection.insertOne(reservation);
         return reservation;
     } catch (err) {
         logger.error(`ERROR: cannot insert reservation`)
