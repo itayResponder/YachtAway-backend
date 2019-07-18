@@ -1,6 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://itay:12345@cluster0-ipcos.mongodb.net/test?
-retryWrites=true&w=majority`
+const uri = `mongodb+srv://itay:12345@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority`
 module.exports = {
     connect,
     getCollection
