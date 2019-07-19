@@ -8,7 +8,8 @@ module.exports = {
     remove,
     update,
     add,
-    login
+    login,
+    sendReservationToOwner
 }
 
 async function query(filterBy = {}) {
@@ -26,6 +27,18 @@ async function query(filterBy = {}) {
     } catch (err) {
         logger.error('Cannot find users')
         throw err;
+    }
+}
+
+async function sendReservationToOwner(pendingReservation) {
+    const collection = await dbService.getCollection('user')
+    try {
+        const ownerUser = await collection.findOne({"_id": ObjectId(pendingReservation.yacht.owner._id)})
+        ownerUser.reservations.push(pendingReservation)
+        const updatedUser = await collection.replaceOne({ "_id": ObjectId(ownerUser._id) }, { $set: ownerUser })
+        return updatedUser
+    } catch (err) {
+        logger.error('Cannot update reservation to owner yacht users')
     }
 }
 
@@ -90,6 +103,7 @@ async function login(user) {
             user._id = foundUser._id;
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
+            user.reservations = foundUser.reservations;
             delete user.password;
             delete user.email;
             return user;

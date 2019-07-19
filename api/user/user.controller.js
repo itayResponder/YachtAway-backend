@@ -26,10 +26,10 @@ async function login(req, res) {
 
 async function sendMsg(req, res) {
     try {
-        console.log('server userController sendMsg req.body:', req.body)
-        // const sendMsg = await userService.sendReservationToOwner(req.body)
+        const sendMsg = await userService.sendReservationToOwner(req.body)
+        res.send(sendMsg);
     } catch (err) {
-        console.log('err',err);
+        res.status(500).send({ error: err })
     }
 }
 
