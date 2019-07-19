@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-
-const uri = `mongodb+srv://itay:bqgsldL9r0tVYpLJ@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority`
+// &maxIdleTimeMS=1200000 -> 2 Hours
+const uri = `mongodb+srv://itay:bqgsldL9r0tVYpLJ@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority&maxIdleTimeMS=1200000`
 module.exports = {
     connect,
     getCollection
