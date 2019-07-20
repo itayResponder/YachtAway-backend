@@ -6,7 +6,8 @@ module.exports = {
     deleteUser,
     login,
     logout,
-    setFavorite
+    setFavorite,
+    sendMsg
 }
 
 async function login(req, res) {
@@ -22,6 +23,16 @@ async function login(req, res) {
         res.status(500).send({ error: err })
     }
 }
+
+async function sendMsg(req, res) {
+    try {
+        const sendMsg = await userService.sendReservationToOwner(req.body)
+        res.send(sendMsg);
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
 async function setFavorite(req, res) {
     try {
         const user = await userService.getById(req.body.userId)
@@ -31,7 +42,6 @@ async function setFavorite(req, res) {
         res.send(updatedUser)
     }
     catch (err) {
-        console.log('error')
         res.status(500).send({ error: err })
     }
 }

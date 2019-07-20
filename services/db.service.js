@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-
-const uri = `mongodb+srv://itay:12345@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority`
+// &maxIdleTimeMS= 1000 * 60 * 5 -> 5 min
+const uri = `mongodb+srv://itay:bqgsldL9r0tVYpLJ@cluster0-ipcos.mongodb.net/test?retryWrites=true&w=majority&maxIdleTimeMS=300000`
 module.exports = {
     connect,
     getCollection
@@ -9,9 +9,10 @@ module.exports = {
 // Database Name
 const dbName = 'yachts_db';
 var dbConn = null;
-
 async function connect() {
-    if (dbConn) return dbConn;
+    if (dbConn) {
+        return dbConn;
+    } 
     try {
         const client = await MongoClient.connect(uri, { useNewUrlParser: true });
         const db = client.db(dbName);

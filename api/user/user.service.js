@@ -1,4 +1,3 @@
-
 const dbService = require('../../services/db.service')
 const ObjectId = require('mongodb').ObjectId
 
@@ -9,7 +8,8 @@ module.exports = {
     remove,
     update,
     add,
-    login
+    login,
+    sendReservationToOwner
 }
 
 async function query(filterBy = {}) {
@@ -20,7 +20,6 @@ async function query(filterBy = {}) {
     if (filterBy.minBalance) {
         criteria.balance = { $gte: filterBy.minBalance }
     }
-
     const collection = await dbService.getCollection('user')
     try {
         const users = await collection.find(criteria).toArray();
@@ -28,6 +27,18 @@ async function query(filterBy = {}) {
     } catch (err) {
         logger.error('Cannot find users')
         throw err;
+    }
+}
+
+async function sendReservationToOwner(pendingReservation) {
+    const collection = await dbService.getCollection('user')
+    try {
+        const ownerUser = await collection.findOne({"_id": ObjectId(pendingReservation.yacht.owner._id)})
+        ownerUser.reservations.push(pendingReservation)
+        const updatedUser = await collection.replaceOne({ "_id": ObjectId(ownerUser._id) }, { $set: ownerUser })
+        return updatedUser
+    } catch (err) {
+        logger.error('Cannot update reservation to owner yacht users')
     }
 }
 
@@ -66,10 +77,9 @@ async function update(user) {
     const collection = await dbService.getCollection('user')
     try {
         await collection.replaceOne({ "_id": ObjectId(user._id) }, { $set: user })
-        console.log('last stop ', user)
         return user
     } catch (err) {
-        logger.error(`Cannot update user ${user._id}`)
+        logger.error(`backend user.service Cannot update user ${user} error: `, err)
         throw err;
     }
 }
@@ -80,7 +90,7 @@ async function add(user) {
         await collection.insertOne(user);
         return user;
     } catch (err) {
-        logger.error(`Cannot insert user`)
+        logger.error(`backend user.service Cannot add user ${user} error:`, err)
         throw err;
     }
 }
@@ -93,13 +103,14 @@ async function login(user) {
             user._id = foundUser._id;
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
+            user.reservations = foundUser.reservations;
             delete user.password;
             delete user.email;
             return user;
         }
         else return foundUser;
     } catch (err) {
-        logger.error('Cannot login')
+        logger.error(`backend user.service Cannot login user ${user} error:`, err)
         throw err;
     }
 }

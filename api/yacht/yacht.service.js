@@ -49,11 +49,8 @@ async function remove(yachtId) {
 async function update(yacht) {
     const collection = await dbService.getCollection('yacht')
     try {
-        const strId = yacht._id;
-        const _id = new ObjectId(strId);
-        yacht._id = _id;
-        await collection.updateOne({ _id }, { $set: yacht })
-        return yacht
+        const updatedYacht = await collection.updateOne({ "_id": ObjectId(yacht) }, { $set: yacht })
+        return updatedYacht
     } catch (err) {
         logger.error(`ERROR: cannot update yacht ${yacht._id}`)
         throw err;
@@ -66,7 +63,7 @@ async function add(yacht) {
         await collection.insertOne(yacht);
         return yacht;
     } catch (err) {
-        logger.error(`ERROR: cannot insert yacht`)
+        logger.error(`ERROR: cannot insert yacht ${yacht}`)
         throw err;
     }
 }
