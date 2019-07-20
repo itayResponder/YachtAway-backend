@@ -9,18 +9,18 @@ module.exports = {
     add,
 }
 
-async function query(user = {}) {
+async function query(owner = {}) {
     const criteria = {};
     // get yachts by user logged in
-    if(user._id) {
-        criteria['user._id'] = ObjectId(user._id)
+    if(owner._id) {
+        criteria['owner._id'] = ObjectId(owner._id)
     }
     const collection = await dbService.getCollection('yacht')
     try {
-        const yachts = await collection.find(criteria).toArray();
-        return yachts
+        const ownerYachts = await collection.find(criteria).toArray();
+        return ownerYachts
     } catch (err) {
-        logger.error('ERROR: cannot find yachts')
+        logger.error('ERROR: cannot find owner yachts')
         throw err;
     }
 }
@@ -59,6 +59,7 @@ async function update(yacht) {
 
 async function add(yacht) {
     const collection = await dbService.getCollection('yacht')
+    yacht.owner._id = ObjectId(yacht.owner._id);
     try {
         await collection.insertOne(yacht);
         return yacht;
