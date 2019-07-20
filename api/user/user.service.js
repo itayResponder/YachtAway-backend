@@ -104,6 +104,7 @@ async function login(user) {
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
             user.reservations = foundUser.reservations;
+            user.img = foundUser.img;
             delete user.password;
             delete user.email;
             return user;

@@ -8,19 +8,19 @@ module.exports = {
     add,
 }
 
-async function getYacht(req, res) {
+async function getYachts(req, res) {
     try {
-        const yacht = await yachtService.getById(req.params.id)
-        res.send(yacht)
+        const yachts = await yachtService.query(req.query)
+        res.send(yachts)
     } catch (err) {
         res.status(500).send({ error: err })
     }
 }
 
-async function getYachts(req, res) {
+async function getYacht(req, res) {
     try {
-        const yachts = await yachtService.query(req.query)
-        res.send(yachts)
+        const yacht = await yachtService.getById(req.params.id)
+        res.send(yacht)
     } catch (err) {
         res.status(500).send({ error: err })
     }
