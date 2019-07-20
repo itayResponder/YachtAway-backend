@@ -39,7 +39,7 @@ async function setFavorite(req, res) {
         delete req.body.userId
         user.likedYachts.push(req.body)
         const updatedUser = await userService.update(user)
-        res.send(updatedUser)
+        res.send(updatedUser.likedYachts)
     }
     catch (err) {
         res.status(500).send({ error: err })
