@@ -35,8 +35,8 @@ async function sendReservationToOwner(pendingReservation) {
     try {
         const ownerUser = await collection.findOne({"_id": ObjectId(pendingReservation.yacht.owner._id)})
         ownerUser.reservations.push(pendingReservation)
-        const updatedUser = await collection.replaceOne({ "_id": ObjectId(ownerUser._id) }, { $set: ownerUser })
-        return updatedUser
+        await collection.replaceOne({ "_id": ObjectId(ownerUser._id) }, { $set: ownerUser })
+        return ownerUser
     } catch (err) {
         logger.error('Cannot update reservation to owner yacht users')
     }
