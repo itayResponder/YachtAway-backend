@@ -7,7 +7,8 @@ module.exports = {
     login,
     logout,
     sendMsg,
-    updateLikedYachts
+    updateLikedYachts,
+    sendMsgToUser
 }
 
 async function login(req, res) {
@@ -27,7 +28,6 @@ async function login(req, res) {
 async function updateLikedYachts(req, res) {
     let foundUser = await userService.getById(req.body.userId)
     try {
-        console.log('update req.body:', req.body)
         if (req.body.isLiked) {
             let idx = foundUser.likedYachts.findIndex(userLikedYacht => userLikedYacht._id === req.body._id)
             if (idx > -1) {
@@ -40,6 +40,23 @@ async function updateLikedYachts(req, res) {
 
         let updatedUser = await userService.update(foundUser);
         res.send(updatedUser.likedYachts);
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
+async function sendMsgToUser(req, res) {
+    try {
+        const userSentMsg = await userService.getById(req.body._id)
+        let msgFromOwner
+        if(req.body.isReply) {
+            msgFromOwner = "Your Reservation number: " + req.body._id + " has approve!"
+        }  else {
+            msgFromOwner = "Your Reservation number: " + req.body._id + " has declined!"
+        }
+        userSentMsg.reservations.unshift(msgFromOwner)
+        let updatedUserMsgs = await userService.update(userSentMsg);
+        res.send(updatedUserMsgs.reservations);
     } catch (err) {
         res.status(500).send({ error: err })
     }

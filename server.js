@@ -24,7 +24,7 @@ app.use(session({
 
 if (process.env.NODE_ENV !== 'production') {
     const corsOptions = {
-        origin: ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082'],
+        origin: ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:8083'],
         credentials: true
     };
     app.use(cors(corsOptions));
