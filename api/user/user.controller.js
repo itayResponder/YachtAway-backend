@@ -7,7 +7,8 @@ module.exports = {
     login,
     logout,
     setFavorite,
-    sendMsg
+    sendMsg,
+    updateLikedYachts
 }
 
 async function login(req, res) {
@@ -19,6 +20,20 @@ async function login(req, res) {
         } else {
             res.status(401).send('User does not exist')
         }
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
+async function updateLikedYachts(req, res) {
+    try {
+        let foundUser = await userService.getById(req.body.userId)
+        let idx = foundUser.likedYachts.findIndex(userLikedYacht => userLikedYacht._id === req.body._id)
+        if (idx > -1) {
+            foundUser.likedYachts.splice(idx, 1)
+        }
+        let updatedUser = await userService.update(foundUser);
+        res.send(updatedUser.likedYachts);
     } catch (err) {
         res.status(500).send({ error: err })
     }
