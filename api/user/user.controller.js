@@ -8,7 +8,8 @@ module.exports = {
     logout,
     sendMsg,
     updateLikedYachts,
-    sendMsgToUser
+    sendMsgToUser,
+    getUserReservations
 }
 
 async function login(req, res) {
@@ -50,9 +51,9 @@ async function sendMsgToUser(req, res) {
         const userSentMsg = await userService.getById(req.body._id)
         let msgFromOwner
         if(req.body.isReply) {
-            msgFromOwner = "Your Reservation number: " + req.body._id + " has approve!"
+            msgFromOwner = "Your Reservation number: " + req.body.reservationId + " has been approved!"
         }  else {
-            msgFromOwner = "Your Reservation number: " + req.body._id + " has declined!"
+            msgFromOwner = "Your Reservation number: " + req.body.reservationId + " has been declined!"
         }
         userSentMsg.reservations.unshift(msgFromOwner)
         let updatedUserMsgs = await userService.update(userSentMsg);
@@ -75,6 +76,15 @@ async function logout(req, res) {
     try {
         req.session.destroy()
         res.send({ message: 'logged out successfully' })
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
+async function getUserReservations(req, res) {
+    try {
+        const user = await userService.getById(req.params.id)
+        res.send(user.reservations)
     } catch (err) {
         res.status(500).send({ error: err })
     }
