@@ -29,7 +29,6 @@ async function login(req, res) {
 
 async function updateUserIsOwner(req, res) {
     try {
-        console.log('Server controler updateUserIsOwner req.body;', req.body)
         let foundUser = await userService.getById(req.params.id)
         foundUser.isOwner = true;
         const updatedUser = await userService.update(foundUser);
@@ -40,7 +39,6 @@ async function updateUserIsOwner(req, res) {
 }
 
 async function updateLikedYachts(req, res) {
-    console.log('Server controler updateLikedYachts req.body;', req.body)
     let foundUser = await userService.getById(req.body.userId)
     try {
         if (req.body.isLiked) {
@@ -62,7 +60,6 @@ async function updateLikedYachts(req, res) {
 
 async function sendMsgToUser(req, res) {
     try {
-        console.log('Server controler sendMsgToUser req.body;', req.body)
         const userSentMsg = await userService.getById(req.body._id)
         let msgFromOwner
         if(req.body.isReply) {
@@ -80,7 +77,6 @@ async function sendMsgToUser(req, res) {
 
 async function sendMsg(req, res) {
     try {
-        console.log('Server controler req.body;', req.body)
         const sendMsg = await userService.sendReservationToOwner(req.body)
         res.send(sendMsg);
     } catch (err) {
@@ -99,7 +95,6 @@ async function logout(req, res) {
 
 async function getUserReservations(req, res) {
     try {
-        console.log('Server controler getUserReservations req.body;', req.body)
         const user = await userService.getById(req.params.id)
         res.send(user.reservations)
     } catch (err) {
