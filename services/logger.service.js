@@ -3,6 +3,9 @@ const fs = require('fs')
 const logsDir = './logs';
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
+    fs.appendFile('./logs/log.log', 'First Log', function (err) {
+        if (err) throw err;
+      });
 }
 
 //define the time format
