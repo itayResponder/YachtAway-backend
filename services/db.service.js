@@ -32,7 +32,7 @@ async function connect2() {
         return dbConn;
     }
     try {
-        const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+        const client = await MongoClient.connect(url, { useNewUrlParser: true });
         const db = client.db(dbName);
         dbConn = db;
         return db;
