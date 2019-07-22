@@ -9,7 +9,8 @@ module.exports = {
     sendMsg,
     updateLikedYachts,
     sendMsgToUser,
-    getUserReservations
+    getUserReservations,
+    updateUserIsOwner
 }
 
 async function login(req, res) {
@@ -21,6 +22,17 @@ async function login(req, res) {
         } else {
             res.status(401).send('User does not exist')
         }
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
+async function updateUserIsOwner(req, res) {
+    try {
+        let foundUser = await userService.getById(req.params.id)
+        foundUser.isOwner = true;
+        const updatedUser = await userService.update(foundUser);
+        res.send(updatedUser.isOwner);
     } catch (err) {
         res.status(500).send({ error: err })
     }

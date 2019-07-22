@@ -1,6 +1,6 @@
 const express = require('express')
 const requireAuth = require('../../middlewares/requireAuth.middleware')
-const { getUserReservations, getUsers, deleteUser, login, logout, sendMsg, updateLikedYachts, sendMsgToUser } = require('./user.controller')
+const { getUserReservations, updateUserIsOwner, getUsers, deleteUser, login, logout, sendMsg, updateLikedYachts, sendMsgToUser } = require('./user.controller')
 const router = express.Router()
 
 // middleware that is specific to this router
@@ -8,6 +8,7 @@ const router = express.Router()
 
 // router.get('/', requireAuth, getUsers)
 router.get('/:id', getUserReservations)
+router.put('/:id', updateUserIsOwner)
 router.put('/updateLikedYachts', updateLikedYachts)
 router.put('/sendMsg', sendMsg)
 router.put('/sendMsgToUser', sendMsgToUser)
