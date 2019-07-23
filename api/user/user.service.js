@@ -103,7 +103,6 @@ async function login(user) {
             user._id = foundUser._id;
             user.firstName = foundUser.firstName;
             user.isAdmin = foundUser.isAdmin;
-            user.likedYachts = foundUser.likedYachts;
             user.img = foundUser.img;
             user.isOwner = foundUser.isOwner;
             delete user.password;
