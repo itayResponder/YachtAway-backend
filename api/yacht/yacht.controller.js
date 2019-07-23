@@ -10,7 +10,6 @@ module.exports = {
 
 async function getYachts(req, res) {
     try {
-        console.log('req.query in the comtroller backend is: ',req.query)
         const yachts = await yachtService.query(req.query)
         res.send(yachts)
     } catch (err) {

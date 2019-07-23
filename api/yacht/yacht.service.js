@@ -10,20 +10,27 @@ module.exports = {
 }
 
 async function query(filterBy = {}) {
-    console.log('filterBy backend on the query is: ',filterBy)
+    // console.log('filterBy backend on the query is: ',filterBy)
     const criteria = {};
     // get yachts by user logged in
-    if(filterBy.owner) {
+    if (filterBy.owner) {
         criteria['owner._id'] = ObjectId(owner._id)
     }
-    if(filterBy.facilities) {
-        console.log('server filterBy.facilities.length >0:',filterBy.facilities)
-        criteria['filterBy.facilities']
+    if (filterBy.facilities) {
+        // { $and: [ { "facilities":"wifi"},{ "facilities":"tv"} ,{ "facilities":"ac"}] }
+        // console.log('server filterBy.facilities.length >0:',filterBy.facilities)
+        var monfgoFilter = []
+        filterBy.facilities.forEach(facility => {
+            facility = facility.toLowerCase()
+            monfgoFilter.push({ "facilities": facility })
+        })
+        criteria['$and'] =  monfgoFilter
     }
     const collection = await dbService.getCollection('yacht')
     try {
-        const ownerYachts = await collection.find(criteria).toArray();
-        return ownerYachts
+        const yachts = await collection.find(criteria).toArray();
+        // const ownerYachts = await collection.find(criteria);
+        return yachts
     } catch (err) {
         logger.error('ERROR: cannot find owner yachts')
         throw err;
