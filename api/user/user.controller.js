@@ -5,6 +5,7 @@ module.exports = {
     getUsers,
     deleteUser,
     login,
+    signUp,
     logout,
     sendMsg,
     updateLikedYachts,
@@ -28,6 +29,25 @@ async function login(req, res) {
     }
 }
 
+async function signUp(req, res) {
+    console.log('server user controller sign up req.body:', req.body)
+    try {
+        const foundUserEmail = await userService.getByEmail(req.body.email)
+        console.log('server user controller sign up foundUserEmail:', foundUserEmail)
+        if(!foundUserEmail) {
+            console.log('if null', foundUserEmail )
+            const validUser = await userService.signUp(req.body)
+            console.log('server user controller sign up validUser:', validUser)
+            req.session.user = validUser;
+            res.send(validUser);
+        } else {
+            res.status(401).send('User email is exist!')
+        }
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
+}
+
 async function updateUserIsOwner(req, res) {
     try {
         let foundUser = await userService.getById(req.params.id)
@@ -42,13 +62,13 @@ async function updateUserIsOwner(req, res) {
 async function getUserLikedYachts(req, res) {
     try {
         let foundUser = await userService.getById(req.query[0]);
-        if(foundUser) {
+        if (foundUser) {
             res.send(foundUser.likedYachts)
         } else {
             res.status(401).send('User does not exist')
         }
     } catch (err) {
-        res.status(500).send({error: err})
+        res.status(500).send({ error: err })
     }
 }
 
@@ -58,7 +78,7 @@ async function updateLikedYachts(req, res) {
         if (req.body.isLiked) {
             delete req.body.userId
             foundUser.likedYachts.push(req.body)
-            
+
         } else {
             let idx = foundUser.likedYachts.findIndex(userLikedYacht => userLikedYacht._id === req.body._id)
             if (idx > -1) {
@@ -76,9 +96,9 @@ async function sendMsgToUser(req, res) {
     try {
         const userSentMsg = await userService.getById(req.body._id)
         let msgFromOwner
-        if(req.body.isReply) {
+        if (req.body.isReply) {
             msgFromOwner = "Your Reservation number: " + req.body.reservationId + " has been approved!"
-        }  else {
+        } else {
             msgFromOwner = "Your Reservation number: " + req.body.reservationId + " has been declined!"
         }
         userSentMsg.reservations.unshift(msgFromOwner)

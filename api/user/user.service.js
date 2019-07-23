@@ -9,6 +9,7 @@ module.exports = {
     update,
     add,
     login,
+    signUp,
     sendReservationToOwner
 }
 
@@ -33,7 +34,7 @@ async function query(filterBy = {}) {
 async function sendReservationToOwner(pendingReservation) {
     const collection = await dbService.getCollection('user')
     try {
-        const ownerUser = await collection.findOne({"_id": ObjectId(pendingReservation.yacht.owner._id)})
+        const ownerUser = await collection.findOne({ "_id": ObjectId(pendingReservation.yacht.owner._id) })
         ownerUser.reservations.push(pendingReservation)
         await collection.replaceOne({ "_id": ObjectId(ownerUser._id) }, { $set: ownerUser })
         return ownerUser
@@ -91,6 +92,29 @@ async function add(user) {
         return user;
     } catch (err) {
         logger.error(`backend user.service Cannot add user ${user} error:`, err)
+        throw err;
+    }
+}
+
+async function signUp(foundUser) {
+    const collection = await dbService.getCollection('user')
+    try {
+        foundUser.firstName = foundUser.email;
+        foundUser.lastName = foundUser.email;
+        foundUser.isAdmin = false;
+        foundUser.isOwner = false;
+        foundUser.img = '';
+        foundUser.phone = '';
+        foundUser.reservations = [];
+        foundUser.likedYachts = [];
+        await collection.insertOne(foundUser);
+        delete foundUser.password;
+        delete foundUser.reservations;
+        delete foundUser.likedYachts;
+        delete foundUser.email;
+        return foundUser;
+    } catch (err) {
+        logger.error(`backend user.service Cannot signup user ${user} error:`, err)
         throw err;
     }
 }
