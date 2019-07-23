@@ -12,16 +12,18 @@ module.exports = {
 async function query(filterBy = {}) {
     const criteria = {};
     // get yachts by user logged in
-    if (filterBy.owner) {
-        criteria['owner._id'] = ObjectId(owner._id)
+    if (filterBy.ownerId) {
+        criteria['owner._id'] = ObjectId(filterBy.ownerId)
     }
+
+    //get yachts by facilities
     if (filterBy.facilities) {
-        var monfgoFilter = []
+        var facilitiesFilter = []
         filterBy.facilities.forEach(facility => {
             facility = facility.toLowerCase()
-            monfgoFilter.push({ "facilities": facility })
+            facilitiesFilter.push({ "facilities": facility })
         })
-        criteria['$and'] =  monfgoFilter
+        criteria['$and'] =  facilitiesFilter
     }
     const collection = await dbService.getCollection('yacht')
     try {
