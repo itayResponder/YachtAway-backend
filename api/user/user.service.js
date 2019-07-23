@@ -107,6 +107,7 @@ async function signUp(foundUser) {
         foundUser.phone = '';
         foundUser.reservations = [];
         foundUser.likedYachts = [];
+        foundUser.messages = [];
         await collection.insertOne(foundUser);
         delete foundUser.password;
         delete foundUser.reservations;
