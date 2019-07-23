@@ -97,7 +97,6 @@ async function add(user) {
 
 async function login(user) {
     const collection = await dbService.getCollection('user')
-    console.log('NADAV MANYAK')
     try {
         const foundUser = await collection.findOne(user);
         if (foundUser) {
