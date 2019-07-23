@@ -9,11 +9,16 @@ module.exports = {
     add,
 }
 
-async function query(owner = {}) {
+async function query(filterBy = {}) {
+    console.log('filterBy backend on the query is: ',filterBy)
     const criteria = {};
     // get yachts by user logged in
-    if(owner._id) {
+    if(filterBy.owner) {
         criteria['owner._id'] = ObjectId(owner._id)
+    }
+    if(filterBy.facilities) {
+        console.log('server filterBy.facilities.length >0:',filterBy.facilities)
+        criteria['filterBy.facilities']
     }
     const collection = await dbService.getCollection('yacht')
     try {
