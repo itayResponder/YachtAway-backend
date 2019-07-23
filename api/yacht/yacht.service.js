@@ -10,15 +10,12 @@ module.exports = {
 }
 
 async function query(filterBy = {}) {
-    // console.log('filterBy backend on the query is: ',filterBy)
     const criteria = {};
     // get yachts by user logged in
     if (filterBy.owner) {
         criteria['owner._id'] = ObjectId(owner._id)
     }
     if (filterBy.facilities) {
-        // { $and: [ { "facilities":"wifi"},{ "facilities":"tv"} ,{ "facilities":"ac"}] }
-        // console.log('server filterBy.facilities.length >0:',filterBy.facilities)
         var monfgoFilter = []
         filterBy.facilities.forEach(facility => {
             facility = facility.toLowerCase()
