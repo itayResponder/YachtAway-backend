@@ -28,7 +28,6 @@ async function query(filterBy = {}) {
     const collection = await dbService.getCollection('yacht')
     try {
         const yachts = await collection.find(criteria).toArray();
-        // const ownerYachts = await collection.find(criteria);
         return yachts
     } catch (err) {
         logger.error('ERROR: cannot find owner yachts')
