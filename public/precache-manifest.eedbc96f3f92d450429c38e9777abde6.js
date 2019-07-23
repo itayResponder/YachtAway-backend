@@ -12,8 +12,8 @@ self.__precacheManifest = [
     "url": "/img/file-document-edit-outline.9c30969a.svg"
   },
   {
-    "revision": "40316502d036ad026695",
-    "url": "/css/chunk-vendors.48542c05.css"
+    "revision": "9d39daaf76a0af1801bc",
+    "url": "/css/chunk-vendors.6652d5d1.css"
   },
   {
     "revision": "a27f35b2c1e5f59cb44d1e61052af1ae",
@@ -76,12 +76,12 @@ self.__precacheManifest = [
     "url": "/img/fishing.0d72d302.svg"
   },
   {
-    "revision": "0f996d685601166b35ca",
-    "url": "/js/app.2fd1c722.js"
+    "revision": "e2dad53cadba4a8af45f",
+    "url": "/js/app.6f5e7aa1.js"
   },
   {
-    "revision": "40316502d036ad026695",
-    "url": "/js/chunk-vendors.8fd59375.js"
+    "revision": "9d39daaf76a0af1801bc",
+    "url": "/js/chunk-vendors.2ecdd213.js"
   },
   {
     "revision": "fd963453f4b04f8d5a9a14f786f8ce32",
@@ -102,6 +102,10 @@ self.__precacheManifest = [
   {
     "revision": "2d1702fe7536670f3562967fb6a1f1c5",
     "url": "/img/lock.2d1702fe.svg"
+  },
+  {
+    "revision": "125c855e7089bbfbc9fef6d13e8ebbbc",
+    "url": "/img/jacuzzi.125c855e.svg"
   },
   {
     "revision": "59d09192312db787603ff56f2047b923",
@@ -144,11 +148,11 @@ self.__precacheManifest = [
     "url": "/img/payment-logos.61dc3de3.png"
   },
   {
-    "revision": "08889fd2322c36e5e24744075a701d28",
+    "revision": "d6e2d0913ac32c7b4a0b1e0ef077201b",
     "url": "/index.html"
   },
   {
-    "revision": "0f996d685601166b35ca",
-    "url": "/css/app.35a7490a.css"
+    "revision": "e2dad53cadba4a8af45f",
+    "url": "/css/app.ea3f65ee.css"
   }
 ];
