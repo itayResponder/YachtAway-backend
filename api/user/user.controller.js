@@ -12,7 +12,21 @@ module.exports = {
     sendMsgToUser,
     getUserReservations,
     updateUserIsOwner,
-    getUserLikedYachts
+    getUserLikedYachts,
+    userMsgs
+}
+
+async function userMsgs(req, res) {
+    try {
+        const foundUser = await userService.getById(req.query[0])
+        if(foundUser) {
+            res.send(foundUser.messages);
+        } else {
+            res.status(401).send('User does not exist');
+        }
+    } catch (err) {
+        res.status(500).send({ error: err })
+    }
 }
 
 async function login(req, res) {
