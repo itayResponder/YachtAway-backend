@@ -11,7 +11,8 @@ const {
     logout, 
     sendMsg, 
     updateLikedYachts, 
-    sendMsgToUser 
+    sendMsgToUser,
+    userMsgs
     } = require('./user.controller')
 const router = express.Router()
 
@@ -20,6 +21,7 @@ const router = express.Router()
 
 // router.get('/', requireAuth, getUsers)
 router.get('/', getUserLikedYachts)
+router.get('/userMsgs', userMsgs)
 router.get('/:id', getUserReservations)
 router.put('/updateLikedYachts', updateLikedYachts)
 router.put('/sendMsg', sendMsg)
