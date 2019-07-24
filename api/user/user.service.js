@@ -130,6 +130,7 @@ async function login(user) {
             user.isAdmin = foundUser.isAdmin;
             user.img = foundUser.img;
             user.isOwner = foundUser.isOwner;
+            user.messages = foundUser.messages;
             delete user.password;
             delete user.email;
             return user;

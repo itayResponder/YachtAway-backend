@@ -30,14 +30,10 @@ async function login(req, res) {
 }
 
 async function signUp(req, res) {
-    console.log('server user controller sign up req.body:', req.body)
     try {
         const foundUserEmail = await userService.getByEmail(req.body.email)
-        console.log('server user controller sign up foundUserEmail:', foundUserEmail)
         if(!foundUserEmail) {
-            console.log('if null', foundUserEmail )
             const validUser = await userService.signUp(req.body)
-            console.log('server user controller sign up validUser:', validUser)
             req.session.user = validUser;
             res.send(validUser);
         } else {
@@ -101,9 +97,9 @@ async function sendMsgToUser(req, res) {
         } else {
             msgFromOwner = "Your Reservation number: " + req.body.reservationId + " has been declined!"
         }
-        userSentMsg.reservations.unshift(msgFromOwner)
+        userSentMsg.messages.unshift(msgFromOwner)
         let updatedUserMsgs = await userService.update(userSentMsg);
-        res.send(updatedUserMsgs.reservations);
+        res.send(updatedUserMsgs.messages);
     } catch (err) {
         res.status(500).send({ error: err })
     }
