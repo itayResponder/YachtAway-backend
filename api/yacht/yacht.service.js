@@ -49,14 +49,6 @@ async function query(filterBy = {}) {
             var yachts = await collection.find(criteria).sort(sortBy).toArray()
         }
         else var yachts = await collection.find(criteria).toArray()
-        
-        
-        
-        
-         console.log('after the if')
-         console.log('filterBy.sort',filterBy.sort)
-        
-        
         return yachts
     } catch (err) {
         logger.error('ERROR: cannot find owner yachts')
