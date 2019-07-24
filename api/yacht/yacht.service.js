@@ -25,9 +25,38 @@ async function query(filterBy = {}) {
         })
         criteria['$and'] =  facilitiesFilter
     }
+   
+    if(filterBy.txt){
+    const regex = new RegExp(filterBy.txt, 'i')
+    let locationFilter = [{'location.city':regex},{'location.country':regex }]
+    criteria['$or'] = locationFilter
+    }
+    if(filterBy.minPeople){
+        filterBy.minPeople = +filterBy.minPeople       
+        criteria['maxPeopleOnBoard'] ={$gt:filterBy.minPeople}  
+    }
+
+    if(filterBy.sort === 'price'){
+        var sortBy ={pricePerNight: -1 }
+    }
+    if(filterBy.sort === 'name'){
+        var sortBy ={name: 1 }
+    }
+
     const collection = await dbService.getCollection('yacht')
     try {
-        const yachts = await collection.find(criteria).toArray();
+        if (filterBy.sort) {
+            var yachts = await collection.find(criteria).sort(sortBy).toArray()
+        }
+        else var yachts = await collection.find(criteria).toArray()
+        
+        
+        
+        
+         console.log('after the if')
+         console.log('filterBy.sort',filterBy.sort)
+        
+        
         return yachts
     } catch (err) {
         logger.error('ERROR: cannot find owner yachts')
