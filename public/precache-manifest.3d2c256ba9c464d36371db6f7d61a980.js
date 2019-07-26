@@ -76,8 +76,8 @@ self.__precacheManifest = [
     "url": "/img/fishing.0d72d302.svg"
   },
   {
-    "revision": "e3d3576da9ed90710430",
-    "url": "/js/app.3f680124.js"
+    "revision": "310b1e2c5b101d94745b",
+    "url": "/js/app.00137c7b.js"
   },
   {
     "revision": "9d39daaf76a0af1801bc",
@@ -148,11 +148,11 @@ self.__precacheManifest = [
     "url": "/img/payment-logos.61dc3de3.png"
   },
   {
-    "revision": "249ab5ac804c0f5a537e38dd70edd653",
+    "revision": "69e8f36f31f905bb1bc62d371c57ffc8",
     "url": "/index.html"
   },
   {
-    "revision": "e3d3576da9ed90710430",
-    "url": "/css/app.abfd8b89.css"
+    "revision": "310b1e2c5b101d94745b",
+    "url": "/css/app.fd570613.css"
   }
 ];
