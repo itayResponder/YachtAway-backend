@@ -9,12 +9,11 @@ module.exports = {
 async function query(filterBy = {}) {
     const criteria = {};
     if (filterBy._id) {
-        criteria['user._id'] = ObjectId(filterBy._id)
+        criteria['user._id'] = filterBy._id
     }
     const collection = await dbService.getCollection('reservation')
     try {
         const reservations = await collection.find(criteria).toArray();
-        // console.log(reservations)
         return reservations;
     } catch (err) {
         logger.error(`ERROR: cannot get reservations`)
