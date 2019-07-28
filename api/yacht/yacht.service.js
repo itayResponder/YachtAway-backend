@@ -23,24 +23,24 @@ async function query(filterBy = {}) {
             facility = facility.toLowerCase()
             facilitiesFilter.push({ "facilities": facility })
         })
-        criteria['$and'] =  facilitiesFilter
-    }
-   
-    if(filterBy.txt){
-    const regex = new RegExp(filterBy.txt, 'i')
-    let locationFilter = [{'location.city':regex},{'location.country':regex }]
-    criteria['$or'] = locationFilter
-    }
-    if(filterBy.minPeople){
-        filterBy.minPeople = +filterBy.minPeople       
-        criteria['maxPeopleOnBoard'] ={$gt:filterBy.minPeople}  
+        criteria['$and'] = facilitiesFilter
     }
 
-    if(filterBy.sort === 'price'){
-        var sortBy ={pricePerNight: -1 }
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        let locationFilter = [{ 'location.city': regex }, { 'location.country': regex }]
+        criteria['$or'] = locationFilter
     }
-    if(filterBy.sort === 'name'){
-        var sortBy ={name: 1 }
+    if (filterBy.minPeople) {
+        filterBy.minPeople = +filterBy.minPeople
+        criteria['maxPeopleOnBoard'] = { $gt: filterBy.minPeople }
+    }
+
+    if (filterBy.sort === 'price') {
+        var sortBy = { pricePerNight: -1 }
+    }
+    if (filterBy.sort === 'name') {
+        var sortBy = { name: 1 }
     }
 
     const collection = await dbService.getCollection('yacht')
